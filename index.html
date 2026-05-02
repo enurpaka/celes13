@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celes13 — The Tool That Tightens Your Brand</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --bg: #0a0a0a;
+    --bg-soft: #111111;
+    --bg-card: #161616;
+    --text: #f5f5f5;
+    --text-dim: #888888;
+    --accent: #ff3a20;
+    --accent-glow: rgba(255, 58, 32, 0.4);
+    --border: #222222;
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  
+  /* Custom cursor effect */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 58, 32, 0.06) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 1;
+    transition: background 0.3s;
+  }
+  
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 5%;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .logo .num {
+    color: var(--accent);
+    font-size: 28px;
+    text-shadow: 0 0 20px var(--accent-glow);
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a:hover { color: var(--text); }
+  
+  .nav-cta {
+    background: var(--accent);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 30px var(--accent-glow); }
+  
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 5% 80px;
+    overflow: hidden;
+  }
+  
+  .hero-bg-13 {
+    position: absolute;
+    right: -8%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(400px, 70vw, 900px);
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.08;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    user-select: none;
+    animation: floatNum 8s ease-in-out infinite;
+  }
+  
+  @keyframes floatNum {
+    0%, 100% { transform: translateY(-50%) rotate(-2deg); }
+    50% { transform: translateY(-52%) rotate(2deg); }
+  }
+  
+  .hero-content {
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero h1 {
+    font-size: clamp(48px, 8vw, 110px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 30px;
+    max-width: 900px;
+  }
+  
+  .hero h1 .highlight {
+    color: var(--accent);
+    position: relative;
+    display: inline-block;
+  }
+  
+  .hero h1 .highlight::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 5px;
+    width: 100%;
+    height: 4px;
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent);
+    animation: drawLine 1.5s ease 0.5s both;
+    transform-origin: left;
+  }
+  
+  @keyframes drawLine {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  
+  .hero p {
+    font-size: clamp(16px, 1.4vw, 20px);
+    color: var(--text-dim);
+    max-width: 600px;
+    margin-bottom: 50px;
+  }
+  
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 10px 40px var(--accent-glow);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 50px var(--accent-glow);
+  }
+  
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 16px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  
+  /* Marquee */
+  .marquee {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 30px 0;
+    overflow: hidden;
+    background: var(--bg-soft);
+  }
+  
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: scroll 30s linear infinite;
+    white-space: nowrap;
+  }
+  
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  
+  .marquee-item {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    letter-spacing: -0.5px;
+  }
+  
+  .marquee-item::after {
+    content: '✦';
+    color: var(--accent);
+    font-size: 18px;
+  }
+  
+  /* Sections */
+  section {
+    padding: 120px 5%;
+    position: relative;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section-label {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    max-width: 800px;
+  }
+  
+  .section-subtitle {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin-bottom: 60px;
+  }
+  
+  /* Stats */
+  .stats {
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+  
+  .stat-num {
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: -0.03em;
+  }
+  
+  .stat-label {
+    color: var(--text-dim);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  
+  .about-text p {
+    font-size: 17px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+  
+  .about-text strong { color: var(--text); }
+  
+  .about-visual {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .big-13 {
+    font-size: clamp(280px, 35vw, 480px);
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    text-shadow: 0 0 80px var(--accent-glow);
+    animation: subtle-rotate 12s ease-in-out infinite;
+  }
+  
+  @keyframes subtle-rotate {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  
+  .wrench-svg {
+    position: absolute;
+    width: 60%;
+    opacity: 0.15;
+    animation: spin 20s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Services */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  
+  .service-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.4s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transition: left 0.6s;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    background: linear-gradient(135deg, var(--bg-card), rgba(255, 58, 32, 0.05));
+  }
+  
+  .service-card:hover::before { left: 100%; }
+  
+  .service-num {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 58, 32, 0.1);
+    border: 1px solid rgba(255, 58, 32, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+  
+  .service-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  
+  .service-card p {
+    color: var(--text-dim);
+    font-size: 15px;
+  }
+  
+  /* Why 13 */
+  .why-13 {
+    background: var(--bg-soft);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .why-13-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .giant-13 {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(400px, 60vw, 800px);
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.05;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .why-text {
+    font-size: clamp(20px, 2.5vw, 32px);
+    color: var(--text);
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  
+  .why-text .accent { color: var(--accent); }
+  
+  /* Gallery */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 200px;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+  
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  
+  .gallery-item:hover { 
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(255, 58, 32, 0.2);
+  }
+  
+  .gallery-item:hover img { transform: scale(1.08); }
+  
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  
+  .gallery-overlay .cat {
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  
+  .gallery-overlay h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.3px;
+  }
+  
+  .g-1 { grid-column: span 6; grid-row: span 2; }
+  .g-2 { grid-column: span 6; grid-row: span 1; }
+  .g-3 { grid-column: span 3; grid-row: span 1; }
+  .g-4 { grid-column: span 3; grid-row: span 1; }
+  .g-5 { grid-column: span 4; grid-row: span 2; }
+  .g-6 { grid-column: span 4; grid-row: span 1; }
+  .g-7 { grid-column: span 4; grid-row: span 1; }
+  
+  @media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+    .g-1, .g-2, .g-3, .g-4, .g-5, .g-6, .g-7 { grid-column: span 1; grid-row: span 1; }
+    .g-1 { grid-column: span 2; grid-row: span 2; }
+  }
+  
+  .gallery-cta {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  /* Contact */
+  .contact {
+    text-align: center;
+  }
+  
+  .contact-box {
+    background: linear-gradient(135deg, var(--bg-card), rgba(255, 58, 32, 0.08));
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 80px 40px;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .contact-box::before {
+    content: '13';
+    position: absolute;
+    top: -50px; right: -30px;
+    font-size: 400px;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.05;
+    line-height: 1;
+  }
+  
+  .contact-box h2 {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  
+  .contact-box p {
+    color: var(--text-dim);
+    font-size: 18px;
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  .contact-item:hover { color: var(--accent); }
+  
+  .contact-item svg { width: 20px; height: 20px; }
+  
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 5% 40px;
+    background: var(--bg-soft);
+  }
+  
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 40px;
+  }
+  
+  .footer-brand h3 {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+  
+  .footer-brand h3 .num { color: var(--accent); }
+  
+  .footer-brand p {
+    color: var(--text-dim);
+    max-width: 350px;
+  }
+  
+  .footer-col h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  
+  .footer-col ul { list-style: none; }
+  
+  .footer-col li {
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .footer-col a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--accent); }
+  
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-dim);
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .lang-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .lang-badge {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Mobile */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-content { grid-template-columns: 1fr; gap: 40px; }
+    .contact-info { flex-direction: column; gap: 20px; }
+    section { padding: 80px 5%; }
+  }
+  
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+  }
+  
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Celes<span class="num">13</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#why">Why 13</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-13">13</div>
+  <div class="hero-content">
+    <h1>
+      The tool that <span class="highlight">tightens</span> your brand.
+    </h1>
+    <p>
+      Celes13 is a marketing and content studio built on a decade of broadcast, sports, and brand work — from UEFA Champions League sidelines to Real Madrid strategy rooms. We're the spanner that fits when nothing else does.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">
+        Start a project →
+      </a>
+      <a href="#services" class="btn-secondary">
+        See what we do
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item">UEFA Champions League</div>
+    <div class="marquee-item">Real Madrid</div>
+    <div class="marquee-item">FIBA</div>
+    <div class="marquee-item">Borussia Dortmund</div>
+    <div class="marquee-item">AC Milan</div>
+    <div class="marquee-item">Kosovo Basketball Federation</div>
+    <div class="marquee-item">Nations League</div>
+    <div class="marquee-item">KB Sigal Prishtina</div>
+    <div class="marquee-item">KB Trepça</div>
+    <div class="marquee-item">UEFA Champions League</div>
+    <div class="marquee-item">Real Madrid</div>
+    <div class="marquee-item">FIBA</div>
+    <div class="marquee-item">Borussia Dortmund</div>
+    <div class="marquee-item">AC Milan</div>
+    <div class="marquee-item">Kosovo Basketball Federation</div>
+    <div class="marquee-item">Nations League</div>
+    <div class="marquee-item">KB Sigal Prishtina</div>
+    <div class="marquee-item">KB Trepça</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">2,000+</div>
+        <div class="stat-label">Live TV Episodes Produced</div>
+      </div>
+      <div>
+        <div class="stat-num">100M+</div>
+        <div class="stat-label">Views Generated</div>
+      </div>
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label">International Events Covered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="section-label">About Celes13</span>
+        <h2 class="section-title">Built in studios. Sharpened on the sidelines.</h2>
+        <p>
+          <strong>Celes13</strong> — short for <em>Çelës 13</em>, the spanner — is a marketing studio led by <strong>Enur Pakashtica</strong>, a producer, strategist, and content creator with an MBA in Sports Management from Escuela Universitaria Real Madrid.
+        </p>
+        <p>
+          Over a decade in front of the camera and behind the strategy, we've built shows seen by millions, scaled brands across Europe, and shot the biggest stages in football and basketball — Champions League, Nations League, FIBA tournaments, and Real Madrid itself.
+        </p>
+        <p>
+          We don't sell templates. We arrive, diagnose, and tighten the bolt that nobody else could reach. <strong>That's why we're number 13.</strong>
+        </p>
+      </div>
+      <div class="about-visual">
+        <svg class="wrench-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path d="M150,50 L130,30 A20,20 0 1,0 100,60 L60,100 A20,20 0 1,0 90,130 L130,90 A20,20 0 1,0 170,70 Z" 
+                fill="none" stroke="#ff3a20" stroke-width="3"/>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#ff3a20" stroke-width="1" stroke-dasharray="4,4"/>
+        </svg>
+        <div class="big-13">13</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <span class="section-label">What we do</span>
+    <h2 class="section-title">Every brand has a stuck bolt. We carry the right tool.</h2>
+    <p class="section-subtitle">From strategy to camera, from social feeds to live broadcasts — Celes13 is a full marketing toolkit, built on real-world experience.</p>
+    
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">// 01</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Brand & Marketing Strategy</h3>
+        <p>Positioning, messaging, and go-to-market plans that tighten loose brands and align teams around a single voice.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 02</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>Social Media Management</h3>
+        <p>Content calendars, community growth, and platform-native creative — the same playbook we built for clubs averaging millions of impressions.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 03</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <h3>Photography & Videography</h3>
+        <p>Match days, campaign shoots, behind-the-scenes, brand films. Accredited at Champions League and FIBA level — the work speaks for itself.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 04</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </div>
+        <h3>TV & Live Production</h3>
+        <p>2,000+ live shows produced and hosted. We know what makes broadcasts work — and how to translate that energy into your brand's content.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 05</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Digital Strategy for Sports</h3>
+        <p>Built for clubs, federations, and sports startups. Fan engagement, growth funnels, and digital products that move the needle on real KPIs.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 06</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Fan Engagement & Loyalty</h3>
+        <p>Programs that turn audiences into communities. Our master's thesis on this topic was applied by Real Madrid CF — that's not a slogan, that's a receipt.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 07</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Content Creation</h3>
+        <p>Short-form video, photo storytelling, copy, design — the daily fuel your brand needs to stay visible and remembered.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 08</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <h3>Corporate Communications & PR</h3>
+        <p>Press releases, crisis management, stakeholder communications. We've worked with FIBA, FIBA Europe, broadcasters, and sponsors at the top level.</p>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-num">// 09</div>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>Sponsorship & Partnerships</h3>
+        <p>Global partnership experience from Arowana Sports — pitch decks, sponsor activations, and deal structures built for international reach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY 13 -->
+<section id="why" class="why-13">
+  <div class="giant-13">13</div>
+  <div class="why-13-content container">
+    <span class="section-label">Why 13?</span>
+    <p class="why-text">
+      In every toolkit, there's one tool that fixes what nothing else can. That's the <span class="accent">spanner number 13</span>. Most brands have plenty of strategy, plenty of content, plenty of agencies. <span class="accent">What they're missing is the right fit.</span> That's where we come in.
+    </p>
+  </div>
+</section>
+
+<!-- WORK / GALLERY -->
+<section id="work">
+  <div class="container">
+    <span class="section-label">Selected work</span>
+    <h2 class="section-title">Stages we've worked. Brands we've moved.</h2>
+    <p class="section-subtitle">From Champions League sidelines to FIBA arenas — a glimpse of the lens behind Celes13.</p>
+    
+    <div class="gallery-grid">
+      <a href="https://enur.al/champions-league" target="_blank" class="gallery-item g-1">
+        <img src="https://cdn.myportfolio.com/8718ec44-f6b6-446a-8ac5-a2a6c2f94240/78f4633a-d53e-4b8c-bc14-4d660b64c4b5_rwc_376x284x1061x796x32.jpg?h=5c6417320d7bef6c645ef81233edd032" alt="Champions League">
+        <div class="gallery-overlay">
+          <span class="cat">Football</span>
+          <h4>UEFA Champions League</h4>
+        </div>
+      </a>
+      
+      <a href="https://enur.al/iceland-kosova-uefa-nationsleague" target="_blank" class="gallery-item g-2">
+        <img src="https://cdn.myportfolio.com/8718ec44-f6b6-446a-8ac5-a2a6c2f94240/e384f741-55fe-4a24-9724-62861b146eb7_rwc_0x514x1365x1023x32.jpg?h=9f20240bd763bb6da5eea07e57a2ec9e" alt="Iceland vs Kosova UEFA Nations League">
+        <div class="gallery-overlay">
+          <span class="cat">National Team</span>
+          <h4>Iceland · Kosova — Nations League</h4>
+        </div>
+      </a>
+      
+      <a href="https://enur.al/copy-of-fiba-3x3-prishtina" target="_blank" class="gallery-item g-3">
+        <img src="https://cdn.myportfolio.com/8718ec44-f6b6-446a-8ac5-a2a6c2f94240/b6b9d3a1-39eb-4f5b-ba04-ef58b8ff9f57_rwc_0x680x3840x2880x32.jpg?h=f304645eedb770e300ed80c69a5f2251" alt="Kosova vs Ireland">
+        <div class="gallery-overlay">
+          <span class="cat">National Team</span>
+          <h4>Kosova · Ireland</h4>
+        </div>
+      </a>
+      
+      <a href="https://enur.al/kb-prishtina" target="_blank" class="gallery-item g-4">
+        <img src="https://cdn.myportfolio.com/8718ec44-f6b6-446a-8ac5-a2a6c2f94240/641042e3-1334-4031-b3ba-92499092790f_rwc_538x2009x2889x2166x32.jpg?h=79262ff1886f32dbd05ddb39ea2c53b1" alt="KB Prishtina">
+        <div class="gallery-overlay">
+          <span class="cat">Basketball</span>
+          <h4>KB Sigal Prishtina</h4>
+        </div>
+      </a>
+      
+      <a href="https://enur.al/fiba-3x3-prishtina" target="_blank" class="gallery-item g-5">
+        <img src="https://cdn.myportfolio.com/8718ec44-f6b6-446a-8ac5-a2a6c2f94240/b60e946f-6dc6-4cef-b621-862c322bf475_rwc_0x1431x3840x2880x32.jpg?h=6e39c7e1c750f6d8f6b649b4634a1cf8" alt="FIBA 3x3 Prishtina">
+        <div class="gallery-overlay">
+          <span class="cat">Basketball</span>
+          <h4>FIBA 3x3 Prishtina</h4>
+        </div>
+      </a>
+      
+      <a href="https://enur.al/kb-trepca" target="_blank" class="gallery-item g-6">
+        <img src="https://cdn.myportfolio.com/8718ec44-f6b6-446a-8ac5-a2a6c2f94240/905da4a0-bd30-4921-acc7-2e7b079749aa_rwc_1693x907x4436x3327x32.jpg?h=ded68828ebcdb21d576309dcef379909" alt="KB Trepça">
+        <div class="gallery-overlay">
+          <span class="cat">Basketball</span>
+          <h4>KB Trepça</h4>
+        </div>
+      </a>
+      
+      <a href="https://enur.al/kosova-national-team-basketball" target="_blank" class="gallery-item g-7">
+        <img src="https://cdn.myportfolio.com/8718ec44-f6b6-446a-8ac5-a2a6c2f94240/aae6e8a7-d70e-4acd-9f36-5d1c323036a9_rwc_1220x423x1579x1184x32.jpg?h=bde1eebe9f1ba2009eb0eb4032e90743" alt="Kosova National Team Basketball">
+        <div class="gallery-overlay">
+          <span class="cat">National Team</span>
+          <h4>Kosova Basketball</h4>
+        </div>
+      </a>
+    </div>
+    
+    <div class="gallery-cta">
+      <a href="https://www.enur.al" target="_blank" class="btn-secondary">
+        See full portfolio at enur.al →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact-box">
+      <span class="section-label">Let's tighten things up</span>
+      <h2>Got a brand that needs the right tool?</h2>
+      <p>Drop a message. We reply within 24 hours — in English, Albanian, Spanish, or Turkish.</p>
+      <a href="mailto:enur.pakashtica@hotmail.com" class="btn-primary">
+        Start a conversation →
+      </a>
+      
+      <div class="contact-info">
+        <a href="mailto:enur.pakashtica@hotmail.com" class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          enur.pakashtica@hotmail.com
+        </a>
+        <a href="tel:+38349666734" class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +383 49 666 734
+        </a>
+        <a href="https://www.linkedin.com/in/enurpakashtica/" target="_blank" class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>Celes<span class="num">13</span></h3>
+      <p>The marketing tool that fits when nothing else does. Based in Pristina, working everywhere.</p>
+      <div class="lang-badges" style="margin-top: 20px;">
+        <span class="lang-badge">🇦🇱 Shqip</span>
+        <span class="lang-badge">🇬🇧 English</span>
+        <span class="lang-badge">🇪🇸 Español</span>
+        <span class="lang-badge">🇹🇷 Türkçe</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#why">Why 13</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:enur.pakashtica@hotmail.com">Email</a></li>
+        <li><a href="tel:+38349666734">+383 49 666 734</a></li>
+        <li><a href="https://www.linkedin.com/in/enurpakashtica/" target="_blank">LinkedIn</a></li>
+        <li>Pristina, Kosovo</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Çelës 13 · All rights reserved</div>
+    <div>Designed & built with the right tool.</div>
+  </div>
+</footer>
+
+<script>
+  // Mouse glow effect
+  document.addEventListener('mousemove', (e) => {
+    document.body.style.setProperty('--mouse-x', e.clientX + 'px');
+    document.body.style.setProperty('--mouse-y', e.clientY + 'px');
+  });
+  
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.service-card, .stat-num, .gallery-item');
+  reveals.forEach(el => el.classList.add('reveal'));
+  
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
